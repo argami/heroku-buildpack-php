@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "[LOG] Downloading xhprof"
+git clone -b php7 --single-branch https://github.com/RustJason/xhprof.git -q
+
+cd xhprof/extension
+
+/app/.heroku/php/bin/phpize
+./configure --with-php-config=/app/.heroku/php/bin/php-config
+make
+make install
+
+echo "extension=xhprof.so" >> /app/.heroku/php/etc/php/php.ini
